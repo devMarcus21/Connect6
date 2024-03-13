@@ -1,10 +1,9 @@
 mod boards;
 
-use boards::boards::boards::{Connect6Board, GameBoard};
+#[allow(unused_imports)]
+use crate::boards::boards::boards::{Connect6Board, GameBoard};
+use crate::boards::new_board;
 
-#[allow(unused_variables)]
 fn main() {
-    let board: Connect6Board = boards::new();
-
-
+    let _board = new_board();
 }
