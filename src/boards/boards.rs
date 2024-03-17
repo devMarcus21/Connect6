@@ -1,12 +1,12 @@
 pub trait GameBoard {
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool;
-    fn is_player_turn(self, color: u8) -> bool;
-    fn check_last_player_move_for_win(self, x: u8, y: u8, color: u8) -> bool;
+    fn is_player_turn(&self, color: u8) -> bool;
+    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool;
     fn is_game_finished(&self) -> bool;
-    fn game_winner(self) -> u8;
+    fn game_winner(&self) -> u8;
 
-    fn x_size(self) -> u8;
-    fn y_size(self) -> u8;
+    fn x_size(&self) -> u8;
+    fn y_size(&self) -> u8;
 }
 
 #[allow(dead_code)]
@@ -32,12 +32,12 @@ impl GameBoard for Connect6Board {
         false
     }
 
-    fn is_player_turn(self, color: u8) -> bool {
+    fn is_player_turn(&self, color: u8) -> bool {
         self.player_turn == color
     }
 
     #[allow(unused_variables)]
-    fn check_last_player_move_for_win(self, x: u8, y: u8, color: u8) -> bool {
+    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool {
         false
     }
 
@@ -45,15 +45,15 @@ impl GameBoard for Connect6Board {
         self.game_finished
     }
 
-    fn game_winner(self) -> u8 {
+    fn game_winner(&self) -> u8 {
         self.game_won_by
     }
 
-    fn x_size(self) -> u8 {
+    fn x_size(&self) -> u8 {
         19
     }
 
-    fn y_size(self) -> u8 {
+    fn y_size(&self) -> u8 {
         19
     }
 }
