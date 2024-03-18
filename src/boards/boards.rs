@@ -17,12 +17,14 @@ pub struct Connect6Board {
     player_turn: u8,
 }
 
-pub fn new_connect6_game_board() -> Connect6Board {
-    Connect6Board {
-        board:  [[0; 19]; 19],
-        game_finished: false,
-        game_won_by: 0,
-        player_turn: 1
+impl Connect6Board {
+    pub fn new() -> impl GameBoard {
+        Connect6Board {
+            board:  [[0; 19]; 19],
+            game_finished: false,
+            game_won_by: 0,
+            player_turn: 1
+        }
     }
 }
 
