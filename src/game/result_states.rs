@@ -7,6 +7,7 @@ pub enum MoveResults {
     SpaceIsAlreadyPlacedByOponent,
     NotPlayerTurn,
     GameIsFinished,
+    MoveWithInvalidColor,
 }
 
 impl fmt::Display for MoveResults {
@@ -18,6 +19,7 @@ impl fmt::Display for MoveResults {
             MoveResults::SpaceIsAlreadyPlacedByOponent => write!(f, "SpaceIsAlreadyPlacedByOponent"),
             MoveResults::NotPlayerTurn => write!(f, "NotPlayerTurn"),
             MoveResults::GameIsFinished => write!(f, "GameIsFinished"),
+            MoveResults::MoveWithInvalidColor => write!(f, "MoveWithInvalidColor"),
 
             _ => write!(f, "UNKNOWN")
         }

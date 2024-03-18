@@ -19,6 +19,7 @@ pub struct Connect6Board {
     game_finished: bool,
     game_won_by: u8,
     player_turn: u8,
+    number_of_players: u8,
 }
 
 impl Connect6Board {
@@ -27,7 +28,18 @@ impl Connect6Board {
             board:  [[0u8; 19]; 19],
             game_finished: false,
             game_won_by: 0,
-            player_turn: 1
+            player_turn: 1,
+            number_of_players: 2,
+        }
+    }
+
+    // Sets the turn to the next player's turn
+    // Allows the next player to make a move, current player should not
+    // be able to make a move until its their turn again
+    fn set_next_player_turn(&mut self) {
+        self.player_turn = (self.player_turn+1) % (self.number_of_players + 1);
+        if self.player_turn == 0 {
+            self.player_turn = self.player_turn + 1;
         }
     }
 }
@@ -36,6 +48,8 @@ impl GameBoard for Connect6Board {
     #[allow(unused_variables)]
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool {
         self.board[y as usize][x as usize] = color;
+        self.set_next_player_turn();
+
         true
     }
 

@@ -37,7 +37,12 @@ impl<'r> Game<'r> for Connect6Game<'r> {
             return MoveResults::GameIsFinished;
         }
 
-        // TODO check for player's turn
+        if color == 0 {
+            return MoveResults::MoveWithInvalidColor;
+        }
+        if !self.board.is_player_turn(color) {
+            return MoveResults::NotPlayerTurn;
+        }
 
         if !self.is_move_inbounds(x, y) {
             return MoveResults::MoveOutOfBounds;

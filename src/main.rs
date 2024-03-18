@@ -23,6 +23,7 @@ fn main() {
     let mut board = boards::boards::Connect6Board::new();
     let mut game = Connect6Game::new(&mut board);
 
+    make_move(&mut game, 0_u8, 0_u8, 0_u8);
     make_move(&mut game, 8_u8, 7_u8, 1_u8);
 
     game.print();
@@ -30,6 +31,15 @@ fn main() {
 
     make_move(&mut game, 8_u8, 7_u8, 1_u8);
     make_move(&mut game, 8_u8, 7_u8, 2_u8);
+    make_move(&mut game, 0_u8, 0_u8, 2_u8);
+
+    game.print();
+    println!();
+
+    make_move(&mut game, 0_u8, 1_u8, 1_u8);
+
+    game.print();
+    println!();
 
     println!("END");
 }
