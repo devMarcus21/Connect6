@@ -4,9 +4,13 @@ pub trait GameBoard {
     fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool;
     fn is_game_finished(&self) -> bool;
     fn game_winner(&self) -> u8;
+    fn get_space_color(&self, x: u8, y: u8) -> u8;
 
     fn x_size(&self) -> u8;
     fn y_size(&self) -> u8;
+
+    // Testing TODO remove this
+    fn print_board(&self);
 }
 
 #[allow(dead_code)]
@@ -20,7 +24,7 @@ pub struct Connect6Board {
 impl Connect6Board {
     pub fn new() -> impl GameBoard {
         Connect6Board {
-            board:  [[0; 19]; 19],
+            board:  [[0u8; 19]; 19],
             game_finished: false,
             game_won_by: 0,
             player_turn: 1
@@ -31,7 +35,8 @@ impl Connect6Board {
 impl GameBoard for Connect6Board {
     #[allow(unused_variables)]
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool {
-        false
+        self.board[y as usize][x as usize] = color;
+        true
     }
 
     fn is_player_turn(&self, color: u8) -> bool {
@@ -51,11 +56,25 @@ impl GameBoard for Connect6Board {
         self.game_won_by
     }
 
+    fn get_space_color(&self, x: u8, y: u8) -> u8 {
+        self.board[y as usize][x as usize]
+    }
+
     fn x_size(&self) -> u8 {
         19
     }
 
     fn y_size(&self) -> u8 {
         19
+    }
+
+    fn print_board(&self) {
+        for x in 0_u8 .. 19_u8 {
+            print!("[");
+            for y in 0_u8 .. 19_u8 {
+                print!("{} ", self.board[x as usize][y as usize]);
+            }
+            println!("]");
+        }
     }
 }
