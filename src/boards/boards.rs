@@ -1,15 +1,24 @@
 pub trait GameBoard {
+    /// Sets corresponding x-y coordinate with the corresponding player color on the board
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool;
+    /// Returns true if it is the corresponding player color's turn, if not returns false
     fn is_player_turn(&self, color: u8) -> bool;
+    /// Used to check if a move made won the game or not and if so will set the board state accordingly
     fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool;
+    /// Returns true if the game is over
     fn is_game_finished(&self) -> bool;
+    /// Returns the player's color who won the game if it is finished. Returns 0 if game isn't over
     fn game_winner(&self) -> u8;
+    /// Returns the color of the space at the x-y corrdinate if filled. If not filled returns 0 denoting
+    /// an blank or empty space
     fn get_space_color(&self, x: u8, y: u8) -> u8;
 
+    /// Returns the x size of the board
     fn x_size(&self) -> u8;
+    /// Returns the y size of the board
     fn y_size(&self) -> u8;
 
-    // Testing TODO remove this
+    /// Used to print the board to output. Used when running games in the command line mode
     fn print_board(&self);
 }
 
@@ -33,9 +42,8 @@ impl Connect6Board {
         }
     }
 
-    // Sets the turn to the next player's turn
-    // Allows the next player to make a move, current player should not
-    // be able to make a move until its their turn again
+    /// Sets the turn to the next player's turn. Allows the next player to make a move,
+    /// current player should not be able to make a move until its their turn again
     fn set_next_player_turn(&mut self) {
         self.player_turn = (self.player_turn+1) % (self.number_of_players + 1);
         if self.player_turn == 0 {
@@ -45,7 +53,6 @@ impl Connect6Board {
 }
 
 impl GameBoard for Connect6Board {
-    #[allow(unused_variables)]
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool {
         self.board[y as usize][x as usize] = color;
         self.set_next_player_turn();
@@ -57,7 +64,6 @@ impl GameBoard for Connect6Board {
         self.player_turn == color
     }
 
-    #[allow(unused_variables)]
     fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool {
         false
     }

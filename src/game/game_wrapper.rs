@@ -58,6 +58,11 @@ impl<'r> Game<'r> for Connect6Game<'r> {
         }
 
         self.board.make_move(x, y, color);
+        // Check to see if this move won the game or not
+        let did_last_move_win = self.board.check_last_player_move_for_win(x, y, color);
+        if did_last_move_win {
+            return MoveResults::MoveMadeAndGameWon;
+        }
         MoveResults::MoveMade
     }
 

@@ -1,8 +1,10 @@
 mod boards;
 mod game;
 
-use crate::boards::boards::{Connect6Board, GameBoard};
-use crate::game::result_states::MoveResults;
+// Keeping these commented so I remember
+// Also so that the compiler stops giving warnings without using unused
+// use crate::boards::boards::{Connect6Board, GameBoard};
+// use crate::game::result_states::MoveResults;
 use crate::game::game_wrapper::{Connect6Game, Game};
 
 fn clean_input_string(input: &mut String) {
@@ -14,7 +16,7 @@ fn valid_move_input_args(args: &Vec<&str>) -> bool {
     args[0].parse::<u8>().is_ok() && args[1].parse::<u8>().is_ok() && args[2].parse::<u8>().is_ok()
 }
 
-fn main() {
+fn run_command_line_version() {
     let mut board = boards::boards::Connect6Board::new();
     let mut game = Connect6Game::new(&mut board);
 
@@ -66,4 +68,8 @@ fn main() {
             println!("Game winner: {}", game.game_winner());
         }
     }
+}
+
+fn main() {
+    run_command_line_version()
 }
