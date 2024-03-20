@@ -22,13 +22,17 @@ pub trait GameBoard {
     fn print_board(&self);
 }
 
-#[allow(dead_code)]
 pub struct Connect6Board {
-    board: [[u8; 19]; 19],
+    board: [[u8; 19]; 19], // min size must be 19x19
     game_finished: bool,
     game_won_by: u8,
     player_turn: u8,
     number_of_players: u8,
+}
+
+struct BoardPoint {
+    x: u8,
+    y: u8,
 }
 
 impl Connect6Board {
@@ -50,6 +54,22 @@ impl Connect6Board {
             self.player_turn = self.player_turn + 1;
         }
     }
+
+    fn vector_of_points_contain_win(&self, points_to_check: Vec<BoardPoint>, player_color: u8) -> bool {
+        let mut count: u8 = 0;
+        for point in points_to_check.iter() {
+            if self.board[point.y as usize][point.x as usize] == player_color {
+                count += 1;
+                if count == 6 {
+                    return true;
+                }
+            } else {
+                count = 0;
+            }
+        }
+
+        false
+    }
 }
 
 impl GameBoard for Connect6Board {
@@ -64,7 +84,104 @@ impl GameBoard for Connect6Board {
         self.player_turn == color
     }
 
-    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool {
+    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool { // TODO investigate this logic more
+        // Do not expect boards bigger than 127 by 127
+        let x_signed = x as i8;
+        let y_signed = y as i8;
+
+        // Check points that are horizontal to place spot
+        {
+            let mut horizontal_points: Vec<BoardPoint> = Vec::new();
+            let min_x: u8= 0;
+            let max_x: u8 = self.x_size(); // non inclusive
+
+            for x_point in min_x..max_x {
+                horizontal_points.push(BoardPoint{
+                    x: x_point,
+                    y,
+                });
+            }
+
+            if self.vector_of_points_contain_win(horizontal_points, color) {
+                return true;
+            }
+        }
+        // Check points that are vertical to place spot
+        {
+            let mut vertical_points: Vec<BoardPoint> = Vec::new();
+            let min_y: u8 = 0;
+            let max_y: u8 = self.y_size(); // non inclusive
+
+            for y_point in min_y..max_y {
+                vertical_points.push(BoardPoint{
+                    x,
+                    y: y_point,
+                });
+            }
+
+            if self.vector_of_points_contain_win(vertical_points, color) {
+                return true;
+            }
+        }
+        // Check points top left to bottom right diagonal
+        { // Fails to work on diagonal left up to bottom right
+            let mut diagonal_top_left_to_bottom_right_points: Vec<BoardPoint> = Vec::new();
+            let top_left_x: i8 = x_signed - 6;
+            let top_left_y: i8 = y_signed - 6;
+
+            for step in 0_i8..5_i8 {
+                if (top_left_x + step >= 0) && (top_left_y + step >= 0) {
+                    diagonal_top_left_to_bottom_right_points.push(BoardPoint{
+                        x: (top_left_x + step) as u8,
+                        y: (top_left_y + step) as u8,
+                    });
+                }
+            }
+            diagonal_top_left_to_bottom_right_points.push(BoardPoint{ x, y });
+            for step in 1_i8..7_i8 {
+                if (x + (step as u8) >= self.x_size()) || (y + (step as u8) >= self.y_size()) {
+                    break;
+                }
+                diagonal_top_left_to_bottom_right_points.push(BoardPoint{
+                    x: x + (step as u8),
+                    y: y + (step as u8) ,
+                });
+            }
+
+            if self.vector_of_points_contain_win(diagonal_top_left_to_bottom_right_points, color) {
+                return true;
+            }
+        }
+        // Check points bottom left to top right diagonal
+        {
+            let mut diagonal_bottom_left_to_top_right_points: Vec<BoardPoint> = Vec::new();
+            let bottom_left_x: i8 = x_signed - 6;
+            let bottom_left_y: i8 = y_signed + 6;
+
+            for step in 0_i8..5_i8 {
+                if (bottom_left_x + step >= 0) && (bottom_left_y - step < self.y_size() as i8) {
+                    diagonal_bottom_left_to_top_right_points.push(BoardPoint{
+                        x: (bottom_left_x + step) as u8,
+                        y: (bottom_left_y - step) as u8,
+                    });
+                }
+            }
+            diagonal_bottom_left_to_top_right_points.push(BoardPoint{ x, y });
+            for step in 1_i8..7_i8 {
+                if (x + (step as u8) >= self.x_size()) || (y < step as u8) {//(y - (step as u8) < 0) {
+                    break;
+                }
+                diagonal_bottom_left_to_top_right_points.push(BoardPoint{
+                    x: x + (step as u8),
+                    y: y - (step as u8) ,
+                });
+            }
+
+            if self.vector_of_points_contain_win(diagonal_bottom_left_to_top_right_points, color) {
+                return true;
+            }
+        }
+
         false
     }
 

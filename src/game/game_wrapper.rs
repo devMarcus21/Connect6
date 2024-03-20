@@ -28,6 +28,7 @@ impl<'r> Connect6Game<'r> {
 }
 
 impl<'r> Game<'r> for Connect6Game<'r> {
+    // TODO still makes move even when game is over in some cases
     fn is_game_over(&self) -> bool {
         self.board.is_game_finished()
     }
