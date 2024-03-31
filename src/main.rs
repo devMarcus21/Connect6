@@ -70,6 +70,141 @@ fn run_command_line_version() {
     }
 }
 
+struct Move {
+    x: u8,
+    y: u8,
+    color: u8,
+}
+
+fn test_runner(moves: Vec<Move>) {
+    let mut board = boards::boards::Connect6Board::new();
+    let mut game = Connect6Game::new(&mut board);
+    for board_move in moves.iter() {
+        println!("{} {} {} {}", game.make_move_on_board(board_move.x, board_move.y, board_move.color), board_move.x, board_move.y, board_move.color);
+    }
+    game.print();
+}
+
+fn make_move(x: u8, y: u8, color: u8) -> Move {
+    Move {
+        x,
+        y,
+        color
+    }
+}
+
 fn main() {
-    run_command_line_version()
+    //run_command_line_version()
+    {
+        let moves = vec![
+            make_move(0, 0, 1),
+            make_move(0, 1, 2),
+            make_move(1, 0, 1),
+            make_move(0, 2, 2),
+            make_move(2, 0, 1),
+            make_move(0, 3, 2),
+            make_move(3, 0, 1),
+            make_move(0, 4, 2),
+            make_move(4, 0, 1),
+            make_move(0, 5, 2),
+            make_move(5, 0, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(1, 0, 1),
+            make_move(0, 1, 2),
+            make_move(2, 0, 1),
+            make_move(0, 2, 2),
+            make_move(3, 0, 1),
+            make_move(0, 3, 2),
+            make_move(4, 0, 1),
+            make_move(0, 4, 2),
+            make_move(5, 0, 1),
+            make_move(0, 5, 2),
+            make_move(6, 0, 1)
+        ];
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(1, 7, 1),
+            make_move(0, 1, 2),
+            make_move(2, 7, 1),
+            make_move(0, 2, 2),
+            make_move(3, 7, 1),
+            make_move(0, 3, 2),
+            make_move(4, 7, 1),
+            make_move(0, 4, 2),
+            make_move(5, 7, 1),
+            make_move(0, 5, 2),
+            make_move(6, 7, 1)
+        ];
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(0, 0, 1),
+            make_move(1, 1, 2),
+            make_move(0, 1, 1),
+            make_move(1, 2, 2),
+            make_move(0, 2, 1),
+            make_move(1, 3, 2),
+            make_move(0, 3, 1),
+            make_move(1, 4, 2),
+            make_move(0, 4, 1),
+            make_move(1, 5, 2),
+            make_move(0, 5, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(5, 0, 1),
+            make_move(1, 1, 2),
+            make_move(5, 1, 1),
+            make_move(1, 2, 2),
+            make_move(5, 2, 1),
+            make_move(1, 3, 2),
+            make_move(5, 3, 1),
+            make_move(1, 4, 2),
+            make_move(5, 4, 1),
+            make_move(1, 5, 2),
+            make_move(5, 5, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(7, 7, 1),
+            make_move(1, 1, 2),
+            make_move(7, 8, 1),
+            make_move(1, 2, 2),
+            make_move(7, 9, 1),
+            make_move(1, 3, 2),
+            make_move(7, 10, 1),
+            make_move(1, 4, 2),
+            make_move(7, 11, 1),
+            make_move(1, 5, 2),
+            make_move(7, 12, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(0, 18, 1),
+            make_move(1, 1, 2),
+            make_move(0, 17, 1),
+            make_move(1, 2, 2),
+            make_move(0, 16, 1),
+            make_move(1, 3, 2),
+            make_move(0, 15, 1),
+            make_move(1, 4, 2),
+            make_move(0, 14, 1),
+            make_move(1, 5, 2),
+            make_move(7, 7, 1)];
+
+        test_runner(moves);
+    }
 }

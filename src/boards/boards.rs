@@ -54,22 +54,6 @@ impl Connect6Board {
             self.player_turn = self.player_turn + 1;
         }
     }
-
-    fn vector_of_points_contain_win(&self, points_to_check: Vec<BoardPoint>, player_color: u8) -> bool {
-        let mut count: u8 = 0;
-        for point in points_to_check.iter() {
-            if self.board[point.y as usize][point.x as usize] == player_color {
-                count += 1;
-                if count == 6 {
-                    return true;
-                }
-            } else {
-                count = 0;
-            }
-        }
-
-        false
-    }
 }
 
 impl GameBoard for Connect6Board {
@@ -84,42 +68,42 @@ impl GameBoard for Connect6Board {
         self.player_turn == color
     }
 
-    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool { // TODO investigate this logic more
+    fn check_last_player_move_for_win(&self, x: u8, y: u8, color: u8) -> bool {
         // Do not expect boards bigger than 127 by 127
 
         // Check points that are horizontal to place spot
         {
-            let mut horizontal_points: Vec<BoardPoint> = Vec::new();
+            let mut count_of_player_spaces_in_a_row: u8 = 0;
             let min_x: u8= 0;
             let max_x: u8 = self.x_size(); // non inclusive
 
             for x_point in min_x..max_x {
-                horizontal_points.push(BoardPoint{
-                    x: x_point,
-                    y,
-                });
-            }
-
-            if self.vector_of_points_contain_win(horizontal_points, color) {
-                return true;
+                if self.board[y as usize][x_point as usize] == color {
+                    count_of_player_spaces_in_a_row += 1;
+                    if count_of_player_spaces_in_a_row == 6 {
+                        return true;
+                    }
+                } else {
+                    count_of_player_spaces_in_a_row = 0;
+                }
             }
         }
 
         // Check points that are vertical to place spot
         {
-            let mut vertical_points: Vec<BoardPoint> = Vec::new();
+            let mut count_of_player_spaces_in_a_row: u8 = 0;
             let min_y: u8 = 0;
             let max_y: u8 = self.y_size(); // non inclusive
 
             for y_point in min_y..max_y {
-                vertical_points.push(BoardPoint{
-                    x,
-                    y: y_point,
-                });
-            }
-
-            if self.vector_of_points_contain_win(vertical_points, color) {
-                return true;
+                if self.board[y_point as usize][x as usize] == color {
+                    count_of_player_spaces_in_a_row += 1;
+                    if count_of_player_spaces_in_a_row == 6 {
+                        return true;
+                    }
+                } else {
+                    count_of_player_spaces_in_a_row = 0;
+                }
             }
         }
 
