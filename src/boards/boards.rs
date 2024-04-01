@@ -1,3 +1,5 @@
+use std::cmp;
+
 pub trait GameBoard {
     /// Sets corresponding x-y coordinate with the corresponding player color on the board
     fn make_move(&mut self, x: u8, y: u8, color: u8) -> bool;
@@ -28,11 +30,6 @@ pub struct Connect6Board {
     game_won_by: u8,
     player_turn: u8,
     number_of_players: u8,
-}
-
-struct BoardPoint {
-    x: u8,
-    y: u8,
 }
 
 impl Connect6Board {
@@ -104,6 +101,29 @@ impl GameBoard for Connect6Board {
                 } else {
                     count_of_player_spaces_in_a_row = 0;
                 }
+            }
+        }
+
+        // Check points that are diagonal left to right from place spot
+        {
+            let mut count_of_player_spaces_in_a_row: u8 = 0;
+            let diff_to_top_left_edge: u8 = cmp::min(x, y);
+
+            let mut top_left_x: u8 = x-diff_to_top_left_edge;
+            let mut top_left_y: u8 = y-diff_to_top_left_edge;
+
+            while top_left_x < self.x_size() && top_left_y < self.y_size() {
+                if self.board[top_left_y as usize][top_left_x as usize] == color {
+                    count_of_player_spaces_in_a_row += 1;
+                    if count_of_player_spaces_in_a_row == 6 {
+                        return true;
+                    }
+                } else {
+                    count_of_player_spaces_in_a_row = 0;
+                }
+
+                top_left_x += 1;
+                top_left_y += 1;
             }
         }
 

@@ -95,7 +95,7 @@ fn make_move(x: u8, y: u8, color: u8) -> Move {
 
 fn main() {
     //run_command_line_version()
-    {
+    /*{
         let moves = vec![
             make_move(0, 0, 1),
             make_move(0, 1, 2),
@@ -204,6 +204,54 @@ fn main() {
             make_move(0, 14, 1),
             make_move(1, 5, 2),
             make_move(7, 7, 1)];
+
+        test_runner(moves);
+    }*/
+    {
+        let moves = vec![
+            make_move(0, 0, 1),
+            make_move(0, 1, 2),
+            make_move(1, 1, 1),
+            make_move(0, 2, 2),
+            make_move(2, 2, 1),
+            make_move(0, 3, 2),
+            make_move(3, 3, 1),
+            make_move(0, 4, 2),
+            make_move(4, 4, 1),
+            make_move(0, 5, 2),
+            make_move(5, 5, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(18, 18, 1),
+            make_move(0, 1, 2),
+            make_move(17, 17, 1),
+            make_move(0, 2, 2),
+            make_move(16, 16, 1),
+            make_move(0, 3, 2),
+            make_move(15, 15, 1),
+            make_move(0, 4, 2),
+            make_move(14, 14, 1),
+            make_move(0, 5, 2),
+            make_move(13, 13, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(10, 10, 1),
+            make_move(0, 1, 2),
+            make_move(11, 11, 1),
+            make_move(0, 2, 2),
+            make_move(12, 12, 1),
+            make_move(0, 3, 2),
+            make_move(13, 13, 1),
+            make_move(0, 4, 2),
+            make_move(14, 14, 1),
+            make_move(0, 5, 2),
+            make_move(15, 15, 1)];
 
         test_runner(moves);
     }
