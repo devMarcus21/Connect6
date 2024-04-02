@@ -207,7 +207,7 @@ fn main() {
 
         test_runner(moves);
     }*/
-    {
+    /*{
         let moves = vec![
             make_move(0, 0, 1),
             make_move(0, 1, 2),
@@ -252,6 +252,54 @@ fn main() {
             make_move(14, 14, 1),
             make_move(0, 5, 2),
             make_move(15, 15, 1)];
+
+        test_runner(moves);
+    }*/
+    {
+        let moves = vec![
+            make_move(0, 18, 1),
+            make_move(0, 1, 2),
+            make_move(1, 17, 1),
+            make_move(0, 2, 2),
+            make_move(2, 16, 1),
+            make_move(0, 3, 2),
+            make_move(3, 15, 1),
+            make_move(0, 4, 2),
+            make_move(4, 14, 1),
+            make_move(0, 5, 2),
+            make_move(5, 13, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(18, 0, 1),
+            make_move(0, 1, 2),
+            make_move(17, 1, 1),
+            make_move(0, 2, 2),
+            make_move(16, 2, 1),
+            make_move(0, 3, 2),
+            make_move(15, 3, 1),
+            make_move(0, 4, 2),
+            make_move(14, 4, 1),
+            make_move(0, 5, 2),
+            make_move(13, 5, 1)];
+
+        test_runner(moves);
+    }
+    {
+        let moves = vec![
+            make_move(10, 10, 1),
+            make_move(0, 1, 2),
+            make_move(11, 9, 1),
+            make_move(0, 2, 2),
+            make_move(12, 8, 1),
+            make_move(0, 3, 2),
+            make_move(13, 7, 1),
+            make_move(0, 4, 2),
+            make_move(14, 6, 1),
+            make_move(0, 5, 2),
+            make_move(15, 5, 1)];
 
         test_runner(moves);
     }

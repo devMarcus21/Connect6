@@ -104,13 +104,13 @@ impl GameBoard for Connect6Board {
             }
         }
 
-        // Check points that are diagonal left to right from place spot
+        // Check points that are diagonal top left to bottom right from place spot
         {
             let mut count_of_player_spaces_in_a_row: u8 = 0;
             let diff_to_top_left_edge: u8 = cmp::min(x, y);
 
-            let mut top_left_x: u8 = x-diff_to_top_left_edge;
-            let mut top_left_y: u8 = y-diff_to_top_left_edge;
+            let mut top_left_x: u8 = x - diff_to_top_left_edge;
+            let mut top_left_y: u8 = y - diff_to_top_left_edge;
 
             while top_left_x < self.x_size() && top_left_y < self.y_size() {
                 if self.board[top_left_y as usize][top_left_x as usize] == color {
@@ -127,7 +127,28 @@ impl GameBoard for Connect6Board {
             }
         }
 
-        // TODO Add diagonal win logic
+        // Check points that are diagonal bottom left to top right from place spot
+        {
+            let mut count_of_player_spaces_in_a_row: u8 = 0;
+            let diff_to_bottom_left_edge: u8 = cmp::min(x, self.y_size() - y - 1);
+
+            let mut bottom_left_x: u8 = x - diff_to_bottom_left_edge;
+            let mut bottom_left_y: i8 = (y + diff_to_bottom_left_edge) as i8; // Allows for checking 0th y index
+
+            while bottom_left_x < self.x_size() && bottom_left_y >= 0 {
+                if self.board[bottom_left_y as usize][bottom_left_x as usize] == color {
+                    count_of_player_spaces_in_a_row += 1;
+                    if count_of_player_spaces_in_a_row == 6 {
+                        return true;
+                    }
+                } else {
+                    count_of_player_spaces_in_a_row = 0;
+                }
+
+                bottom_left_x += 1;
+                bottom_left_y -= 1;
+            }
+        }
 
         false
     }

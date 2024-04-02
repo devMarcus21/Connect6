@@ -6,7 +6,7 @@ pub trait Game<'r> {
     fn make_move_on_board(&mut self, x: u8, y: u8, color: u8) -> MoveResults;
     fn game_winner(&self) -> u8;
 
-    // Testing TODO remove this
+    // For playing with CLI
     fn print(&self);
 }
 
