@@ -1,11 +1,13 @@
 mod boards;
 mod game;
+mod games_service;
 
 // Keeping these commented so I remember
 // Also so that the compiler stops giving warnings without using unused
 // use crate::boards::boards::{Connect6Board, GameBoard};
 // use crate::game::result_states::MoveResults;
 use crate::game::game_wrapper::{Connect6Game, Game};
+use crate::games_service::games_service::{GamesServicer};
 
 fn clean_input_string(input: &mut String) {
     *input = input.replace("\r", "");
