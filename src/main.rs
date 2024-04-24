@@ -97,7 +97,8 @@ fn make_move(x: u8, y: u8, color: u8) -> Move {
 
 fn main() {
     //let mut service = GamesService::new();
-    //service.start_new_game();
+    //let id = service.start_new_game();
+    //println!("{}", id);
     //run_command_line_version()
     /*{
         let moves = vec![

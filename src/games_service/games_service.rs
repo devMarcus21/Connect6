@@ -1,3 +1,4 @@
+use rand::Rng;
 use std::collections::HashMap;
 use crate::boards::boards::Connect6Board;
 use crate::game::game_wrapper::{Game, Connect6Game};
@@ -15,7 +16,7 @@ impl GamesService {
         let game_map_con: HashMap<u64, Box<dyn Game>> = HashMap::new();
 
         Self {
-            games_data: game_map_con // TODO check if this will mutate
+            games_data: game_map_con
         }
     }
 }
@@ -24,8 +25,12 @@ impl GamesServicer for GamesService {
     fn start_new_game(&mut self) -> u64 {
         let board = Box::new(Connect6Board::new());
         let game = Box::new(Connect6Game::new(board));
-        self.games_data.insert(1, game);
 
-        1 // TODO implement
+        // Generate random number for the game id
+        let mut rng = rand::thread_rng();
+        let game_id: u64 = rng.gen();
+        self.games_data.insert(game_id, game);
+
+        game_id
     }
 }
