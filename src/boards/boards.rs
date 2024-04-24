@@ -33,8 +33,8 @@ pub struct Connect6Board {
 }
 
 impl Connect6Board {
-    pub fn new() -> impl GameBoard {
-        Connect6Board {
+    pub fn new() -> Self {
+        Self {
             board:  [[0u8; 19]; 19],
             game_finished: false,
             game_won_by: 0,

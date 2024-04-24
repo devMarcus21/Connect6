@@ -1,34 +1,31 @@
-use chashmap::CHashMap;
+use std::collections::HashMap;
 use crate::boards::boards::Connect6Board;
 use crate::game::game_wrapper::{Game, Connect6Game};
 
-pub trait GamesServicer<'r> {
+pub trait GamesServicer {
     fn start_new_game(&mut self) -> u64;
 }
 
-pub struct GamesService<'r> {
-    //games_data: &'r mut CHashMap<u64, &'r mut dyn Game<'r>>
-    games_data: CHashMap<u64, &'r mut dyn Game<'r>>
+pub struct GamesService {
+    games_data: HashMap<u64, Box<dyn Game>>
 }
 
-impl<'r> GamesService<'r> {
-    pub fn new(self) -> impl GamesServicer<'r> {
-        let game_map_con: CHashMap<u64, &mut dyn Game<'r>> = CHashMap::new();
+impl GamesService {
+    pub fn new() -> Self {
+        let game_map_con: HashMap<u64, Box<dyn Game>> = HashMap::new();
 
-        GamesService{
+        Self {
             games_data: game_map_con // TODO check if this will mutate
         }
     }
 }
 
-impl<'r> GamesServicer<'r> for GamesService<'r> {
+impl GamesServicer for GamesService {
     fn start_new_game(&mut self) -> u64 {
-        /*let mut board = Box::new(Connect6Board::new());
-        //let mut game = Connect6Game::new(&mut board);
-        let mut game = Connect6Game::new(board.as_mut());
+        let board = Box::new(Connect6Board::new());
+        let game = Box::new(Connect6Game::new(board));
+        self.games_data.insert(1, game);
 
-        self.games_data.insert_new(1, &mut game);
-        1*/
-        0 // TODO implement
+        1 // TODO implement
     }
 }

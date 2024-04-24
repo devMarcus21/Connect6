@@ -1,7 +1,7 @@
 use crate::boards::boards::GameBoard;
 use crate::game::result_states::MoveResults;
 
-pub trait Game<'r> {
+pub trait Game {
     fn is_game_over(&self) -> bool;
     fn make_move_on_board(&mut self, x: u8, y: u8, color: u8) -> MoveResults;
     fn game_winner(&self) -> u8;
@@ -10,13 +10,13 @@ pub trait Game<'r> {
     fn print(&self);
 }
 
-pub struct Connect6Game<'r> {
-    board: &'r mut dyn GameBoard,
+pub struct Connect6Game {
+    board: Box<dyn GameBoard>,
 }
 
-impl<'r> Connect6Game<'r> {
-    pub fn new(game_board: &'r mut dyn GameBoard) -> impl Game + 'r {
-        Connect6Game {
+impl Connect6Game {
+    pub fn new(game_board: Box<dyn GameBoard>) -> Self {
+        Self {
             board: game_board,
         }
     }
@@ -27,7 +27,7 @@ impl<'r> Connect6Game<'r> {
     }
 }
 
-impl<'r> Game<'r> for Connect6Game<'r> {
+impl Game for Connect6Game {
     // TODO still makes move even when game is over in some cases
     fn is_game_over(&self) -> bool {
         self.board.is_game_finished()

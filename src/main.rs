@@ -7,7 +7,7 @@ mod games_service;
 // use crate::boards::boards::{Connect6Board, GameBoard};
 // use crate::game::result_states::MoveResults;
 use crate::game::game_wrapper::{Connect6Game, Game};
-use crate::games_service::games_service::{GamesServicer};
+use crate::games_service::games_service::{GamesServicer, GamesService};
 
 fn clean_input_string(input: &mut String) {
     *input = input.replace("\r", "");
@@ -19,8 +19,8 @@ fn valid_move_input_args(args: &Vec<&str>) -> bool {
 }
 
 fn run_command_line_version() {
-    let mut board = boards::boards::Connect6Board::new();
-    let mut game = Connect6Game::new(&mut board);
+    let board = Box::new(boards::boards::Connect6Board::new());
+    let mut game = Connect6Game::new(board);
 
     let mut run_game_loop = true;
 
@@ -79,8 +79,8 @@ struct Move {
 }
 
 fn test_runner(moves: Vec<Move>) {
-    let mut board = boards::boards::Connect6Board::new();
-    let mut game = Connect6Game::new(&mut board);
+    let board = Box::new(boards::boards::Connect6Board::new());
+    let mut game = Connect6Game::new(board);
     for board_move in moves.iter() {
         println!("{} {} {} {}", game.make_move_on_board(board_move.x, board_move.y, board_move.color), board_move.x, board_move.y, board_move.color);
     }
@@ -96,6 +96,8 @@ fn make_move(x: u8, y: u8, color: u8) -> Move {
 }
 
 fn main() {
+    //let mut service = GamesService::new();
+    //service.start_new_game();
     //run_command_line_version()
     /*{
         let moves = vec![
